@@ -1,0 +1,9 @@
+[package]
+name = "power_cable_alerter"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+windows = { version = "0.54.0", features = ["System_Power", "UI_Notifications", "Data_Xml_Dom"] }
