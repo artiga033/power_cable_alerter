@@ -1,0 +1,26 @@
+name: Rust
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Ensure Rust Target
+      run: rustup default stable-x86_64-pc-windows-msvc
+    - name: Build
+      run: cargo build --release --verbose
+    - name: Archive
+      run: Compress-Archive -DestinationPath power_cable_alerter-x86_64.zip -Path ('.\LICENSE','.\target\release\power_cable_alerter.exe')
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: power_cable_alerter-x86_64.zip
