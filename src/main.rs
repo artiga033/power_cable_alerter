@@ -1,4 +1,4 @@
-use std::io;
+use std::{io, thread, time::Duration};
 
 use windows::{
     core::{Interface, HSTRING},
@@ -34,7 +34,10 @@ fn main() {
         Ok(())
     }))
     .expect("failed to register event handler");
-    loop {}
+    loop {
+        // just sleep forever, and the winrt events can still be triggered and executed
+        thread::sleep(Duration::MAX);
+    }
 }
 
 fn toast<S>(text: S, image_uri: &HSTRING) -> windows::core::Result<()>
